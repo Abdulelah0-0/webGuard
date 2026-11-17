@@ -1,41 +1,46 @@
-<h1 align="center">WebGuard</h1>
-<p align="center">Web security configuration auditing for Windows</p>
-<p align="center"><a href="../../releases/latest"><strong>Download WebGuard.exe</strong></a> · <a href="#quick-start">Quick start</a> · <a href="#build-and-test">Build and test</a></p>
+# WebGuard
+
+WebGuard is a Windows desktop tool for auditing website security configuration. It helps developers, site owners, and security reviewers see what a web server returns, understand why an observation matters, and verify configuration changes after a fix. The desktop interface is available in Arabic and English.
 
 ![WebGuard 2.2.0 dashboard showing findings and remediation in English](docs/dashboard.png)
 
 *WebGuard 2.2.0 with demonstration results.*
 
+## What WebGuard checks
+
+| Area | What you can review |
+| --- | --- |
+| HTTPS and TLS | Connection and certificate observations, including certificate expiry when available. |
+| Security headers | Response headers such as HSTS and Content Security Policy, with recommended configuration changes. |
+| Cookies | Security attributes such as `Secure`, `HttpOnly`, and `SameSite`. |
+| CORS and HTML | Cross-origin policy observations and indicators such as insecure resources referenced by an HTTPS page. |
+| Coverage | The outcome for each URL, including partial coverage and requests that failed. |
+
 ## Quick start
 
-1. Download **WebGuard.exe** for Windows x64 from [Releases](../../releases).
-2. Enter a URL you are authorized to assess and run an assessment.
-3. Select a finding to review its evidence, potential impact, and recommended fix. Use **HTTP** for redacted response evidence or export a report.
+1. Start the desktop app using the source instructions below. Windows x64 builds, when published, are available under [Releases](../../releases).
+2. Enter a URL you own or are authorized to assess. To review a set of pages, import a saved Sitemap XML or OpenAPI 3 JSON file and select up to 50 same-origin URLs.
+3. Run the assessment and select a finding to review the observed evidence, potential impact, and recommended fix. Open **HTTP** to view redacted response evidence.
+4. Export a PDF, HTML, or JSON report as needed. The English workspace PDF includes a prioritized remediation plan.
+5. After applying fixes, run the assessment again. Use scan history to compare observations for the same unredacted URL without query parameters, or record verification evidence in the workspace.
 
-## Assessment workflow
+## Working with findings
 
-| Task | What WebGuard provides |
-| --- | --- |
-| Define the scope | Assess one URL or review up to 50 same-origin URLs imported from saved Sitemap XML and OpenAPI 3 JSON files. |
-| Inspect responses | Review TLS, security headers, cookies, CORS, HTML indicators, and the outcome for each URL. |
-| Share findings | Export PDF, HTML, or JSON. The English workspace PDF includes a prioritized remediation plan. |
-| Verify changes | Reopen a scan from SQLite history, compare observations, and record verification evidence. |
-| Bring team evidence | Import JSON, CSV, and SARIF findings and retain their sources and status. |
+WebGuard bases its built-in findings on the responses it receives from the selected URLs. A finding may require additional context to determine its impact. Review the evidence and coverage before closing a finding or treating a check as passed. Authentication workflows and exploit verification are outside the built-in assessment scope.
 
-Built-in observations are based on responses from the selected URLs. Authentication workflows and exploit verification are outside the built-in assessment scope. Findings from a team can be imported and tracked separately by source.
+The workspace can import findings from JSON, CSV, and SARIF and retain each finding’s source and status. The repository includes [example JSON](example_findings.json) and [example CSV](example_findings.csv) files.
 
-## Build and test
+## Run, build, and test
 
-Use Python 3.13 with Tkinter on Windows.
+Use Python 3.13 with Tkinter on Windows. From the repository folder, run the following in PowerShell:
 
 ```powershell
 python -m pip install -r requirements-report.txt
 python webguard_desktop.py
-python -m unittest -v
 ```
 
-Run `build_windows.bat` to build the standalone executable in `dist`. The v2.2.0 test suite contains **31 tests**, including nine labeled responses served by a local HTTP server.
+Run `python -m unittest -v` to execute the test suite. Run `build_windows.bat` to build the standalone Windows executable in `dist`.
 
-## Local data
+## Local data and report privacy
 
-Scan history is stored in SQLite under `%LOCALAPPDATA%\WebGuard`. Review reports and imported evidence before sharing. Use the path privacy setting when the URL itself contains sensitive information.
+Scan history is stored in a local SQLite database under `%LOCALAPPDATA%\WebGuard`. Use the path privacy option when URL paths contain sensitive information. Review reports and imported evidence before sharing them.
