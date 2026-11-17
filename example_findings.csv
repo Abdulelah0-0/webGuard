@@ -1,0 +1,3 @@
+asset,id,source,kind,severity,title,evidence,observed_at,impact,correlation_id
+https://example.test/,REVIEW-001,Internal review,XSS,medium,Output encoding review,Review reference IR-14,2026-11-12T06:00:00Z,Untrusted content may reach HTML output,CASE-14
+https://example.test/,AUDIT-014,Independent review,XSS,medium,Output encoding review,Review reference QA-22,2026-11-12T06:05:00Z,Untrusted content may reach HTML output,CASE-14

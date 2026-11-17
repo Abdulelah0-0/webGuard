@@ -1,0 +1,29 @@
+{
+  "schema": "webguard-findings/1",
+  "findings": [
+    {
+      "asset": "https://example.test/",
+      "id": "REVIEW-001",
+      "source": "Internal code review",
+      "kind": "SQL_INJECTION",
+      "state": "needs_review",
+      "severity": "medium",
+      "observed_at": "2026-11-12T01:00:00Z",
+      "title": "Database query construction requires review",
+      "evidence": "The team reported dynamically constructed SQL in an application repository.",
+      "impact": "If user-controlled data reaches query construction, it could change the meaning of the query."
+    },
+    {
+      "asset": "https://example.test/",
+      "id": "REVIEW-002",
+      "source": "Internal code review",
+      "kind": "XSS",
+      "state": "needs_review",
+      "severity": "medium",
+      "observed_at": "2026-11-12T01:00:00Z",
+      "title": "Output encoding requires review",
+      "evidence": "The team reported a rendering path that needs an output encoding review.",
+      "impact": "Untrusted content could reach a browser rendering context."
+    }
+  ]
+}
